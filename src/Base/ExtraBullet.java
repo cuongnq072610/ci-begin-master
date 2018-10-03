@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class ExtraBullet extends GameObject{
     public ExtraBullet(){
+        super();
         ArrayList<BufferedImage> images = SpriteUtils.loadImages(
                 "assets/images/sphere-bullets/0.png",
                 "assets/images/sphere-bullets/1.png",
@@ -19,6 +20,10 @@ public class ExtraBullet extends GameObject{
 
     @Override
     public void run() {
+        if(this.position.y < 0){
+            this.destroy();
+            return;
+        }
         this.position.addThis(-1,-3);
     }
 }
