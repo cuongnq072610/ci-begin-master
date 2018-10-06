@@ -9,9 +9,9 @@ import tklibs.SpriteUtils;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject {
+public class Player extends GameObject implements Physics{
     FrameCounter fireCounter;
-
+    BoxCollider collider;
     public Player (){
         super();
         ArrayList<BufferedImage> images = SpriteUtils.loadImages(
@@ -28,6 +28,7 @@ public class Player extends GameObject {
 //        Setting.newX = this.position.x;
 //        Setting.newY = this.position.y;
         this.fireCounter = new FrameCounter(10);
+        this.collider = new BoxCollider(32,48);
     }
 
     public void move(int translateX, int translateY){
@@ -73,5 +74,11 @@ public class Player extends GameObject {
         //GameCanvas.bullets.add(bullet);
         this.fireCounter.reset();
             // count 10 frame set = true
+    }
+
+
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.collider;
     }
 }
