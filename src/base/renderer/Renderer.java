@@ -1,6 +1,6 @@
-package Base.Renderer;
+package base.renderer;
 
-import Base.GameObject;
+import base.GameObject;
 
 import java.awt.*;
 

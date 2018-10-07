@@ -1,4 +1,4 @@
-import Game.GameWindow;
+import game.GameWindow;
 
 /**
  * Created by huynq on 7/4/17.

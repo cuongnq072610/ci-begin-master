@@ -1,7 +1,7 @@
-package Base.Renderer;
+package base.renderer;
 
-import Base.Counter.FrameCounter;
-import Base.GameObject;
+import base.counter.FrameCounter;
+import base.GameObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

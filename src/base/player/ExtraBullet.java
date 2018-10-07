@@ -1,12 +1,14 @@
-package Base;
+package base.player;
 
-import Base.Renderer.AnimationRenderer;
+import base.GameObject;
+import base.Vector2D;
+import base.renderer.AnimationRenderer;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class ExtraBullet extends GameObject{
+public class ExtraBullet extends GameObject {
     public ExtraBullet(){
         super();
         ArrayList<BufferedImage> images = SpriteUtils.loadImages(

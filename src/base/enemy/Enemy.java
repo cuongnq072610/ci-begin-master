@@ -1,17 +1,20 @@
-package Base;
+package base.enemy;
 
-import Base.Counter.FrameCounter;
-import Base.Renderer.AnimationRenderer;
+import base.*;
+import base.action.*;
+import base.physics.BoxCollider;
+import base.physics.Physics;
+import base.renderer.AnimationRenderer;
 import tklibs.SpriteUtils;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Enemy extends GameObject implements Physics{
+public class Enemy extends GameObject implements Physics {
     BoxCollider boxCollider;
-    FrameCounter fireCounter;
+    Action action;
+
     public Enemy(){
         super();
         ArrayList<BufferedImage> images = SpriteUtils.loadImages(
@@ -23,7 +26,40 @@ public class Enemy extends GameObject implements Physics{
         this.boxCollider = new BoxCollider(28,28);
         this.renderer = new AnimationRenderer(images,5);
         this.position = new Vector2D(new Random().nextInt(Setting.START_PLAYER_POSITION_X),new Random().nextInt(Setting.START_PLAYER_POSITION_Y));
-        this.fireCounter = new FrameCounter(10);
+        this.defineAction();
+
+    }
+
+    void defineAction(){
+        ActionWait actionWait = new ActionWait(20);
+        Action actionFire =  new Action() {
+            @Override
+            public void run(GameObject master) {
+                fire();
+                this.isDone = true;
+            }
+
+            @Override
+            public void reset() {
+                this.isDone = false;
+            }
+        };
+        Action actionMove = new Action() {
+            @Override
+            public void run(GameObject master) {
+                move();
+            }
+
+            @Override
+            public void reset() {
+
+            }
+        };
+
+        ActionSequence actionSequence = new ActionSequence(actionWait, actionFire);
+        ActionParallel actionParallel = new ActionParallel(actionMove,actionSequence);
+        ActionRepeat actionRepeat = new ActionRepeat(actionParallel);
+        this.action = actionRepeat;
     }
 
     public void move(){
@@ -39,18 +75,13 @@ public class Enemy extends GameObject implements Physics{
 
     public void fire() {
         EnemyBullet bullet1 = GameObject.recycle(EnemyBullet.class);
-        bullet1.position.set(this.position.x, this.position.y);
-        this.fireCounter.reset();
+        bullet1.position.set(this.position.x, this.position.y+5);
     }
 
 
     @Override
     public void run() {
-        boolean fireCounterRun = this.fireCounter.run();
-        if (fireCounterRun) {
-            this.fire();
-        }
-        this.move();
+        this.action.run(this);
     }
 
     @Override

@@ -1,9 +1,7 @@
-package Game;
+package game;
 
-import Base.GameObject;
-import Base.KeyEventPress;
-import Base.Setting;
-import Game.GameCanvas;
+import base.event.KeyEventPress;
+import base.Setting;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -19,7 +17,7 @@ public class GameWindow extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);// close window
         this.setupEventListener();// call event
 
-        // init Game
+        // init game
         this.gameCanvas = new GameCanvas();
         this.add(gameCanvas);
 

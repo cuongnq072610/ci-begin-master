@@ -1,14 +1,17 @@
-package Base;
+package base.player;
 
-import Base.Renderer.AnimationRenderer;
-import Game.GameCanvas;
+import base.physics.BoxCollider;
+import base.GameObject;
+import base.physics.Physics;
+import base.Vector2D;
+import base.enemy.Enemy;
+import base.renderer.AnimationRenderer;
 import tklibs.SpriteUtils;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class PlayerBullet extends GameObject implements Physics{
+public class PlayerBullet extends GameObject implements Physics {
     // create a new Vector contains velocity of each bullet
     // if want to change direct of bullet, set value to velocity
     // change run, not add to position now add to velocity

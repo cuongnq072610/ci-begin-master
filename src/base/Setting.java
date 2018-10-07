@@ -1,4 +1,4 @@
-package Base;
+package base;
 
 public class Setting {
     public static int SCREEN_WIDTH = 800;

@@ -1,7 +1,6 @@
-package Base.Renderer;
+package base.renderer;
 
-import Base.GameObject;
-import Base.Renderer.Renderer;
+import base.GameObject;
 import tklibs.SpriteUtils;
 
 import java.awt.*;

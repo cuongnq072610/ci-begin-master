@@ -1,12 +1,13 @@
-package Base;
+package base;
 
-import Base.Renderer.Renderer;
+import base.physics.Physics;
+import base.renderer.Renderer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-// Game Object Pool:
-// - An array contains all game objects in Game
+// game Object Pool:
+// - An array contains all game objects in game
 // - Recycle game objects
 public class GameObject {
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
@@ -60,21 +61,25 @@ public class GameObject {
                 gameObjects.get(i).run();
             }
         }
-        System.out.println(gameObjects.size());
     }
 
     public static void renderAll(Graphics g){
-        for (GameObject gameObj :
-                gameObjects) {
-            if(gameObj.isActive){
-                gameObj.render(g);
+//        for (GameObject gameObj :
+//                gameObjects) {
+//            if(gameObj.isActive){
+//                gameObj.render(g);
+//            }
+//        }
+        for(int i = 0; i< gameObjects.size(); i++){
+            if(gameObjects.get(i).isActive){
+                gameObjects.get(i).render(g);
             }
         }
         gameObjects.addAll(newGameObjs);
         newGameObjs.clear();
     }
 
-    Renderer renderer;
+    public Renderer renderer;
     public Vector2D position;
     boolean isActive;
 
