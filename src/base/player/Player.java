@@ -15,6 +15,8 @@ public class Player extends GameObject implements Physics {
     FrameCounter fireCounter;
     BoxCollider collider;
     public int hp;
+    public Vector2D velocity;
+
 
     public Player (){
         super();
@@ -34,17 +36,29 @@ public class Player extends GameObject implements Physics {
         this.fireCounter = new FrameCounter(10);
         this.collider = new BoxCollider(32,48);
         this.hp = 20;
+        this.velocity = new Vector2D(0,0);
     }
 
-    public void move(int translateX, int translateY){
-        this.position.addThis(translateX,translateY);
+    public void move(int velocityX, int velocityY){
+        this.velocity.addThis(velocityX,velocityY);
+        this.velocity.set(clamp(velocity.x,-3,3), clamp(velocity.y,-3,3));
+    }
+
+    public float clamp(float number, float min, float max){
+//        if(number<min){
+//            return min;
+//        } else if(number>max){
+//            return max;
+//        } else return number;
+
+        return number < min ? min : number > max ? max : number;
     }
 
     @Override
     public void run() {
         if(KeyEventPress.isUpPress){
             this.move(0,-1);
-
+            System.out.println(this.velocity.x + " " + this.velocity.y);
         }
         if(KeyEventPress.isDownPress){
 
@@ -64,11 +78,12 @@ public class Player extends GameObject implements Physics {
         if (KeyEventPress.isSpacePress && fireCounterRun){
             this.fire();
         }
+        this.position.addThis(this.velocity);
     }
 
     public void fire(){
         //PlayerBullet bullet = new PlayerBullet();
-        PlayerBullet bullet = GameObject.recycle(PlayerBullet.class);
+        PlayerBulletType1 bullet = GameObject.recycle(PlayerBulletType1.class);
         ExtraBullet extraBullet = GameObject.recycle(ExtraBullet.class);
         ExtraBullet2 extraBullet2 = GameObject.recycle(ExtraBullet2.class);
 
@@ -81,8 +96,9 @@ public class Player extends GameObject implements Physics {
             // count 10 frame set = true
     }
 
-    public void takeDamge(int damge, int hp){
+    public void takeDamge(int damge){
         this.hp -= damge;
+        System.out.println(this.hp);
         if(this.hp <= 0){
             this.destroy();
             this.hp = 0;

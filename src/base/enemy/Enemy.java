@@ -17,14 +17,6 @@ public class Enemy extends GameObject implements Physics {
 
     public Enemy(){
         super();
-        ArrayList<BufferedImage> images = SpriteUtils.loadImages(
-                "assets/images/enemies/level0/pink/0.png",
-                "assets/images/enemies/level0/pink/1.png",
-                "assets/images/enemies/level0/pink/2.png",
-                "assets/images/enemies/level0/pink/3.png"
-        );
-        this.boxCollider = new BoxCollider(28,28);
-        this.renderer = new AnimationRenderer(images,5);
         this.position = new Vector2D(new Random().nextInt(Setting.START_PLAYER_POSITION_X),new Random().nextInt(Setting.START_PLAYER_POSITION_Y));
         this.defineAction();
 
@@ -74,10 +66,15 @@ public class Enemy extends GameObject implements Physics {
     }
 
     public void fire() {
-        EnemyBullet bullet1 = GameObject.recycle(EnemyBullet.class);
-        bullet1.position.set(this.position.x, this.position.y+5);
+        if(this.isActive){
+            EnemyBullet bullet1 = GameObject.recycle(EnemyBullet.class);
+            bullet1.position.set(this.position.x, this.position.y+5);
+        }
     }
 
+    public void takeDamage(int damage){
+
+    }
 
     @Override
     public void run() {

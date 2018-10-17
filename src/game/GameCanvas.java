@@ -2,6 +2,7 @@ package game;
 
 import base.*;
 import base.enemy.Enemy;
+import base.enemy.EnemyType1;
 import base.player.Player;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ public class GameCanvas extends JPanel {
     public GameCanvas(){// constructor
         this.backGround = GameObject.recycle(BackGround.class);
         this.player =  GameObject.recycle(Player.class);
-        Enemy enemy = GameObject.recycle(Enemy.class);
+        EnemyType1 enemy = GameObject.recycle(EnemyType1.class);
     }
 
 
@@ -22,12 +23,12 @@ public class GameCanvas extends JPanel {
         GameObject.runAll();
     }
 
-    public void render(Graphics graphics){// call all render function from all class object
-        GameObject.renderAll(graphics);
+    public void render(){// call all render function from all class object
+        GameObject.renderAllToBackBuffer();
     }
 
     @Override
     protected void paintComponent(Graphics graphics) {
-        this.render(graphics);
+        GameObject.renderBackBufferToGame(graphics);
     }
 }

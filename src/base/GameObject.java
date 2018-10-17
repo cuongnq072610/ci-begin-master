@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public class GameObject {
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
     public static ArrayList<GameObject> newGameObjs = new ArrayList<>();
+    public static BufferedImage backBuffer = new BufferedImage(Setting.SCREEN_WIDTH,Setting.SCREEN_HEIGHT,BufferedImage.TYPE_INT_ARGB);
+    public static Graphics backBufferGraphics = backBuffer.createGraphics();
 
     public static <E extends GameObject> /*<- Kieu Class*/ E /*<- Kieu tra ve*/ create(Class<E> childClass){
         try {
@@ -40,7 +42,7 @@ public class GameObject {
     public static <E extends GameObject> E intersect (Class<E> childClass, Physics physics){
         for (GameObject go :
                 gameObjects) {
-            if (go.isActive && go.getClass().isAssignableFrom(childClass) && go instanceof Physics){
+            if (go.isActive && childClass.isAssignableFrom(go.getClass()) && go instanceof Physics){
                 Physics physicsGo = (Physics) go;
                 boolean intersected = physics.getBoxCollider().intersect(physicsGo, (GameObject) physics);
                 if(intersected){
@@ -52,45 +54,38 @@ public class GameObject {
     }
 
     public static void runAll(){
-//        for (GameObject gameObj :
-//                gameObjects) {
-//            gameObj.run();
-//        }
-        for(int i = 0; i< gameObjects.size(); i++){
-            if(gameObjects.get(i).isActive){
-                gameObjects.get(i).run();
-            }
-        }
-    }
-
-    public static void renderAll(Graphics g){
-//        for (GameObject gameObj :
-//                gameObjects) {
-//            if(gameObj.isActive){
-//                gameObj.render(g);
-//            }
-//        }
-        for(int i = 0; i< gameObjects.size(); i++){
-            if(gameObjects.get(i).isActive){
-                gameObjects.get(i).render(g);
+        for (GameObject go : gameObjects) {
+            if(go.isActive) {
+                go.run();
             }
         }
         gameObjects.addAll(newGameObjs);
         newGameObjs.clear();
     }
 
+    public static void renderAllToBackBuffer(){
+        for (GameObject go :
+                gameObjects) {
+            if (go.isActive){
+                go.render(backBufferGraphics);
+            }
+        }
+    }
+
+    public static void renderBackBufferToGame(Graphics g){
+        g.drawImage(backBuffer,0,0,null);
+    }
+
     public Renderer renderer;
     public Vector2D position;
-    boolean isActive;
+    public boolean isActive;
+    public Vector2D anchor;
 
     public GameObject() {
         this.isActive = true;
+        this.anchor = new Vector2D(0.5f,0.5f);
     }
 
-    public GameObject(BufferedImage image) {
-        this.isActive = true;
-        this.position = new Vector2D(0,0);
-    }
 
     public void destroy(){
         this.isActive = false;

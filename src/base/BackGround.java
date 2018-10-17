@@ -11,6 +11,7 @@ public class BackGround extends GameObject{
         BufferedImage image = SpriteUtils.loadImage("assets/images/background/0.png");
         this.renderer = new SingleImgRenderer(image);
         this.position = new Vector2D(0,Setting.SCREEN_HEIGHT-image.getHeight());
+        this.anchor.set(0,0);
     }
 
     @Override
@@ -21,6 +22,5 @@ public class BackGround extends GameObject{
         } else {
             this.position.y += 1;
         }
-        //this.y = -2545;
     }
 }

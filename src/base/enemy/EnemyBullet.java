@@ -26,7 +26,7 @@ public class EnemyBullet extends GameObject implements Physics {
     public void run() {
         Player player = GameObject.intersect(Player.class, this);
         if(player != null) {
-            player.takeDamge(this.damge, player.hp);
+            player.takeDamge(this.damge);
             this.destroy();
             return;
         }

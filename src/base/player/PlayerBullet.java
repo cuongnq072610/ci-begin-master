@@ -18,16 +18,9 @@ public class PlayerBullet extends GameObject implements Physics {
 
     // Vector2D velocity;
     BoxCollider boxCollider;
+    int damage;
     public PlayerBullet(){
         super();
-        ArrayList<BufferedImage> images = SpriteUtils.loadImages(
-                "assets/images/player-bullets/a/0.png",
-                "assets/images/player-bullets/a/1.png",
-                "assets/images/player-bullets/a/2.png",
-                "assets/images/player-bullets/a/3.png"
-        );
-        this.boxCollider = new BoxCollider(24,24);
-        this.renderer = new AnimationRenderer(images);
         this.position = new Vector2D(0,0);
         //this.velocity = new Vector2D(0,0);
     }
@@ -37,12 +30,16 @@ public class PlayerBullet extends GameObject implements Physics {
         // this.velocity.addThis()
     }
 
+    public void hitEnemy(){
+
+    }
+
     @Override
     public void run() {
         Enemy enemy = GameObject.intersect(Enemy.class, this);
         if(enemy != null){
-            enemy.destroy();
-            this.destroy();
+            enemy.takeDamage(this.damage);
+            this.hitEnemy();
             return;
         }
         if(this.position.y < 0){

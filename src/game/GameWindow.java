@@ -81,7 +81,8 @@ public class GameWindow extends JFrame {
                 // logic()
                 gameCanvas.run();
                 //render()
-                this.repaint();
+                gameCanvas.render(); // render all to back buffer
+                this.repaint(); // render back buffer to game
                 lastTime = currentTime;
             }
         }

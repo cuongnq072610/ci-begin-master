@@ -20,6 +20,10 @@ public class Vector2D {
         return new Vector2D(x,y);
     }
 
+    public Vector2D set(Vector2D other){
+        return this.set(other.x, other.y);
+    }
+
     // return another vector with the same x, y
     public Vector2D clone(){
         return new Vector2D(this.x, this.y);
@@ -30,6 +34,12 @@ public class Vector2D {
         this.y += y;
         return new Vector2D(this.x,this.y);
     }
+
+    public Vector2D add(Vector2D other){
+        return this.add(other.x, other.y);
+    }
+
+
     // return old vector with new x , y
     public Vector2D addThis(float x, float y){
         this.x += x;
@@ -37,15 +47,27 @@ public class Vector2D {
         return this;
     }
 
+    public Vector2D addThis(Vector2D other){
+        return this.addThis(other.x, other.y);
+    }
+
     public Vector2D subtract(float x, float y){
         Vector2D result = new Vector2D(this.x - x, this.y - y);
         return result;
+    }
+
+    public Vector2D subtract(Vector2D other){
+        return this.subtract(other.x, other.y);
     }
 
     public Vector2D subtractThis(float x, float y){
         this.x -= x;
         this.y -= y;
         return this;
+    }
+
+    public Vector2D subtractThis(Vector2D other){
+        return this.addThis(other.x, other.y);
     }
 
     public Vector2D scale(float n){
@@ -70,8 +92,4 @@ public class Vector2D {
         System.out.println(x + " " + y);
     }
 
-//    public static void main(String[] args) {
-//        Vector2D v1 = new Vector2D(10,20);
-//        v1.print();
-//    }
 }
